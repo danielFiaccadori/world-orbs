@@ -1,7 +1,7 @@
-package net.dndats.world_orbs.blocks.test;
+package net.dndats.world_orbs.orbs.apotheosis;
 
-import net.dndats.world_orbs.blocks.AbstractWorldOrbModel;
-import net.dndats.world_orbs.blocks.AbstractWorldOrbRenderer;
+import net.dndats.world_orbs.orbs.AbstractWorldOrbModel;
+import net.dndats.world_orbs.orbs.AbstractWorldOrbRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class ApotheosisOrbRenderer extends AbstractWorldOrbRenderer<ApotheosisOrbBlockEntity> {

@@ -1,10 +1,14 @@
 package net.dndats.world_orbs.data;
 
+import net.dndats.world_orbs.data.packets.PacketSetActiveEffectData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
@@ -35,6 +39,12 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
 
     public void setActiveOrbId(ResourceLocation activeOrbId) {
         this.activeOrbId = activeOrbId;
+    }
+
+    public void clear() {
+        this.orbPos = null;
+        this.maxCooldown = -1;
+        this.activeOrbId = null;
     }
 
     @Override
@@ -71,4 +81,11 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
             activeOrbId = ResourceLocation.tryParse(tag.getString("activeOrbId"));
         }
     }
+
+    public void syncData(Entity entity) {
+        if (entity instanceof ServerPlayer serverPlayer) {
+            PacketDistributor.sendToPlayer(serverPlayer, new PacketSetActiveEffectData(this));
+        }
+    }
+
 }

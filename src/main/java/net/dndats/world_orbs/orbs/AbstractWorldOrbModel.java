@@ -1,4 +1,4 @@
-package net.dndats.world_orbs.blocks;
+package net.dndats.world_orbs.orbs;
 
 import net.dndats.world_orbs.Worldorbs;
 import net.minecraft.resources.ResourceLocation;

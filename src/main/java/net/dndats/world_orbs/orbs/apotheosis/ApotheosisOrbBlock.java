@@ -1,7 +1,7 @@
-package net.dndats.world_orbs.blocks.test;
+package net.dndats.world_orbs.orbs.apotheosis;
 
 import com.mojang.serialization.MapCodec;
-import net.dndats.world_orbs.blocks.AbstractWorldOrbBlock;
+import net.dndats.world_orbs.orbs.AbstractWorldOrbBlock;
 import net.dndats.world_orbs.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -26,8 +26,6 @@ public class ApotheosisOrbBlock extends AbstractWorldOrbBlock<ApotheosisOrbBlock
     protected ApotheosisOrbBlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ApotheosisOrbBlockEntity(pos, state);
     }
-
-
 
     public static final MapCodec<ApotheosisOrbBlock> CODEC = simpleCodec((t) -> new ApotheosisOrbBlock());
 

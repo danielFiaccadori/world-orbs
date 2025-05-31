@@ -1,5 +1,7 @@
 {
   "itemGroup.world_orbs": "Example Mod Tab",
   "block.world_orbs.example_block": "Example Block",
-  "item.world_orbs.example_item": "Example Item"
+  "item.world_orbs.example_item": "Example Item",
+  "key.world_orbs.use_orb": "Use orb",
+  "key.categories.world_orbs": "World orbs"
 }

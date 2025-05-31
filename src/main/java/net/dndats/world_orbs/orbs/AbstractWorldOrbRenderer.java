@@ -1,4 +1,4 @@
-package net.dndats.world_orbs.blocks;
+package net.dndats.world_orbs.orbs;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
