@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.dndats.world_orbs.blocks.test.ApotheosisOrbBlockEntity;
 import net.dndats.world_orbs.blocks.test.ApotheosisOrbRenderer;
 import net.dndats.world_orbs.registry.ModBlockEntities;
+import net.dndats.world_orbs.registry.ModData;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -29,6 +30,9 @@ public class Worldorbs {
 
         // Registers blocks
         ModBlockEntities.register(modEventBus);
+
+        // Registers data
+        ModData.ATTACHMENT_TYPES.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

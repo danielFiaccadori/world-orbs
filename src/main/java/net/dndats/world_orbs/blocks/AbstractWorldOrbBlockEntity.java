@@ -41,5 +41,4 @@ public abstract class AbstractWorldOrbBlockEntity<T extends AbstractWorldOrbBloc
         return cache;
     }
 
-
 }
