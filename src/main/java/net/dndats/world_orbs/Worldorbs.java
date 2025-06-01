@@ -1,12 +1,15 @@
 package net.dndats.world_orbs;
 
 import com.mojang.logging.LogUtils;
+import net.dndats.world_orbs.entities.whirlpool.WhirlpoolEntity;
+import net.dndats.world_orbs.entities.whirlpool.WhirlpoolRenderer;
 import net.dndats.world_orbs.orbs.apotheosis.ApotheosisActiveEffect;
 import net.dndats.world_orbs.orbs.apotheosis.ApotheosisOrbBlockEntity;
 import net.dndats.world_orbs.orbs.apotheosis.ApotheosisOrbRenderer;
 import net.dndats.world_orbs.registry.ActiveEffectRegistry;
 import net.dndats.world_orbs.registry.ModBlockEntities;
 import net.dndats.world_orbs.registry.ModData;
+import net.dndats.world_orbs.registry.ModEntities;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -19,6 +22,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 
@@ -37,6 +41,9 @@ public class Worldorbs {
         // Registers active effects
         ActiveEffectRegistry.register(ResourceLocation.withDefaultNamespace("apotheosis_orb"),
                 ApotheosisActiveEffect::new);
+
+        // Registers entities
+        ModEntities.register(modEventBus);
 
         // Registers data
         ModData.ATTACHMENT_TYPES.register(modEventBus);
@@ -63,6 +70,7 @@ public class Worldorbs {
         public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.APOTHEOSIS_ORB_BLOCK_ENTITY.get(),
                     (BlockEntityRendererProvider<? super ApotheosisOrbBlockEntity>) ApotheosisOrbRenderer::new);
+            event.registerEntityRenderer(ModEntities.WHIRLPOOL.get(), WhirlpoolRenderer::new);
         }
 
     }
