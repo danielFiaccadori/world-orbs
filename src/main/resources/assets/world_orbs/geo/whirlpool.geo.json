@@ -7,8 +7,8 @@
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 2,
-				"visible_bounds_height": 1.5,
-				"visible_bounds_offset": [0, 0.25, 0]
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
 				{
@@ -20,9 +20,16 @@
 				},
 				{
 					"name": "body",
-					"pivot": [0, 4, 0],
+					"pivot": [0, 0, 0],
 					"cubes": [
 						{"origin": [-12, 0, -12], "size": [25, 0, 25], "uv": [-25, 16]}
+					]
+				},
+				{
+					"name": "blast",
+					"pivot": [0, 4.5, 0],
+					"cubes": [
+						{"origin": [-8, 2.5, -8], "size": [16, 0, 16], "uv": [14, 21]}
 					]
 				}
 			]

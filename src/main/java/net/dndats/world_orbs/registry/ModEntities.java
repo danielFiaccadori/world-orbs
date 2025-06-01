@@ -22,7 +22,7 @@ public class ModEntities {
 
     public static final Supplier<EntityType<WhirlpoolEntity>> WHIRLPOOL =
             ENTITIES.register("whirlpool", () -> EntityType.Builder.of(WhirlpoolEntity::new, MobCategory.MISC)
-                    .sized(5, 1).build(String.valueOf(WHIRLWIND_KEY)));
+                    .sized(5, 0).build(String.valueOf(WHIRLWIND_KEY)));
 
     public static void register(IEventBus eventBus) {
         ENTITIES.register(eventBus);
