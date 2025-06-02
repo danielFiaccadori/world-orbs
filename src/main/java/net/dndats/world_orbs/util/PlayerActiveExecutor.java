@@ -21,6 +21,8 @@ public class PlayerActiveExecutor {
         if (ability != null) {
             var data = serverPlayer.getData(ModData.ACTIVE_GLOBAL_EFFECT.get());
 
+            orb.triggerUseAnimation();
+
             if (data.isInCooldown()) return;
 
             ability.onUse(serverPlayer);

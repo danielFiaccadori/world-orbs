@@ -23,7 +23,7 @@ public class ApotheosisActiveEffect extends AbstractActiveEffect {
     private static final float DAMAGE_AMOUNT = 4.0F;
 
     public ApotheosisActiveEffect() {
-        super(1000);
+        super(100);
     }
 
     @Override

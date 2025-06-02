@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -78,7 +79,14 @@ public class WhirlpoolEntity extends PathfinderMob implements GeoEntity {
         super.tick();
 
         if (this.owner != null) {
-            this.teleportTo(this.owner.getX(), this.owner.getY(), this.owner.getZ());
+            this.setPos(owner.getX(), owner.getY(), owner.getZ());
+            this.setDeltaMovement(Vec3.ZERO);
+
+            if (level().isClientSide) {
+                this.xOld = this.getX();
+                this.yOld = this.getY();
+                this.zOld = this.getZ();
+            }
         }
 
         if (level().isClientSide) {
@@ -89,7 +97,6 @@ public class WhirlpoolEntity extends PathfinderMob implements GeoEntity {
             this.discard();
         }
     }
-
 
     private void spawnSplashOnNearbyEntities() {
         double radius = 1;

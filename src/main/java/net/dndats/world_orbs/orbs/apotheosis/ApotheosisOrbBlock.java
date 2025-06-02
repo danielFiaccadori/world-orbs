@@ -14,10 +14,8 @@ public class ApotheosisOrbBlock extends AbstractWorldOrbBlock<ApotheosisOrbBlock
     public ApotheosisOrbBlock() {
         super(Properties.of()
                         .noOcclusion()
-                        .isSuffocating((s, g, p) -> false)
-                        .isViewBlocking((s, g, p) -> false)
                         .strength(2.0f)
-                        .sound(SoundType.STONE)
+                        .sound(SoundType.AMETHYST)
                         .lightLevel(state -> 2),
                 ModBlockEntities.APOTHEOSIS_ORB);
     }

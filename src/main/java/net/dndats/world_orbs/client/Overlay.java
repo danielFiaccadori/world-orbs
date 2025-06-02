@@ -14,7 +14,7 @@ public class Overlay {
     public static void renderActiveEffectOverlay(RenderGuiEvent.Pre event) {
         Player player = Minecraft.getInstance().player;
 
-        if (player != null) {
+        if (player != null && canRender(player)) {
             var data = player.getData(ModData.ACTIVE_GLOBAL_EFFECT.get());
             int currentCooldown = data.getCurrentCooldownTicks();
             int totalCooldown = data.getMaxCooldownTicks();
@@ -29,6 +29,10 @@ public class Overlay {
 
             OverlayHelper.renderCooldownOverlay(event, texturePath, player);
         }
+    }
+
+    private static boolean canRender(Player player) {
+        return player.getData(ModData.ACTIVE_GLOBAL_EFFECT.get()).getOrbPos() != null;
     }
 
     private static String getCooldownOverlayPercent(double cooldown) {

@@ -4,6 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,6 +36,10 @@ public abstract class AbstractWorldOrbBlockEntity<T extends AbstractWorldOrbBloc
         this.orbUserId = orbUserId;
     }
 
+    public void playSound(Level level, BlockPos pos, SoundEvent sound) {
+        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
+
     public boolean hasUser() {
         return orbUserId != null;
     }
@@ -54,8 +62,12 @@ public abstract class AbstractWorldOrbBlockEntity<T extends AbstractWorldOrbBloc
         }
     }
 
-    protected static final RawAnimation DEPLOY_ANIM = RawAnimation.begin()
-            .thenPlay("0");
+    protected static final RawAnimation IDLE_ANIM = RawAnimation.begin()
+            .thenPlay("idle");
+    protected static final RawAnimation USE_ANIM = RawAnimation.begin()
+            .thenPlay("use");
+    protected static final RawAnimation ACTIVATE_ANIM = RawAnimation.begin()
+            .thenPlay("activate");
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -69,13 +81,23 @@ public abstract class AbstractWorldOrbBlockEntity<T extends AbstractWorldOrbBloc
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(
-                new AnimationController<>(this, "deploy_controller", 0, this::deployAnimController)
-                        .triggerableAnim("deploy", DEPLOY_ANIM)
+                new AnimationController<>(this, "orb_anim_controller", 0, this::orbAnimController)
+                        .triggerableAnim("idle", IDLE_ANIM)
+                        .triggerableAnim("use", USE_ANIM)
+                        .triggerableAnim("activate", ACTIVATE_ANIM)
         );
     }
 
-    protected <E extends BlockEntity & GeoAnimatable> PlayState deployAnimController(AnimationState<E> state) {
-        return state.setAndContinue(DEPLOY_ANIM);
+    public void triggerUseAnimation() {
+        this.triggerAnim("orb_anim_controller", "use");
+    }
+
+    public void triggerActivateAnimation() {
+        this.triggerAnim("orb_anim_controller", "activate");
+    }
+
+    protected <E extends BlockEntity & GeoAnimatable> PlayState orbAnimController(AnimationState<E> state) {
+        return state.setAndContinue(IDLE_ANIM);
     }
 
     @Override
