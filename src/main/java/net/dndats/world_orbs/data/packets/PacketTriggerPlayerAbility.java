@@ -39,7 +39,6 @@ public record PacketTriggerPlayerAbility(ResourceLocation orbId, BlockPos orbPos
         if (!context.flow().isServerbound()) return;
 
         context.enqueueWork(() -> {
-            Worldorbs.LOGGER.info("Sent message to execute active effect for player: {}", context.player().getName().getString());
             ServerPlayer player = (ServerPlayer) context.player();
             Level level = player.level();
             PlayerActiveExecutor.useOrbActiveEffectForPlayer(level, message.orbPos(), player);

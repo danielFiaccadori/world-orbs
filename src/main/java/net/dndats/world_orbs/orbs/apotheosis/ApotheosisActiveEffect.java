@@ -1,7 +1,7 @@
 package net.dndats.world_orbs.orbs.apotheosis;
 
-import net.dndats.world_orbs.abilities.IOrbActiveEffect;
 import net.dndats.world_orbs.entities.whirlpool.WhirlpoolEntity;
+import net.dndats.world_orbs.orbs.AbstractActiveEffect;
 import net.dndats.world_orbs.registry.ModEntities;
 import net.dndats.world_orbs.util.TickScheduler;
 import net.minecraft.network.chat.Component;
@@ -17,10 +17,14 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class ApotheosisActiveEffect implements IOrbActiveEffect {
+public class ApotheosisActiveEffect extends AbstractActiveEffect {
 
     private static final int RADIUS = 5;
     private static final float DAMAGE_AMOUNT = 4.0F;
+
+    public ApotheosisActiveEffect() {
+        super(1000);
+    }
 
     @Override
     public void onActivate(ServerPlayer player) {
@@ -30,6 +34,8 @@ public class ApotheosisActiveEffect implements IOrbActiveEffect {
 
     @Override
     public void onUse(ServerPlayer player) {
+        super.onUse(player);
+
         Level level = player.level();
 
         player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 15, 0));

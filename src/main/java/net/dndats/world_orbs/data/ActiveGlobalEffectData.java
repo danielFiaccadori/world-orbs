@@ -14,8 +14,11 @@ import org.jetbrains.annotations.NotNull;
 public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
 
     private BlockPos orbPos;
-    private long maxCooldown = -1;
+    private int currentCooldownTicks = 0;
+    private int maxCooldownTicks = 0;
     private ResourceLocation activeOrbId;
+
+    // --- Orb position ---
 
     public BlockPos getOrbPos() {
         return orbPos;
@@ -25,13 +28,37 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
         this.orbPos = orbPos;
     }
 
-    public long getMaxCooldown() {
-        return maxCooldown;
+    // --- Cooldowns ---
+
+    public int getMaxCooldownTicks() {
+        return maxCooldownTicks;
     }
 
-    public void setMaxCooldown(long maxCooldown) {
-        this.maxCooldown = maxCooldown;
+    public void setMaxCooldownTicks(int maxCooldownTicks) {
+        this.maxCooldownTicks = maxCooldownTicks;
     }
+
+    public int getCurrentCooldownTicks() {
+        return currentCooldownTicks;
+    }
+
+    public void refreshCurrentCooldownTicks() {
+        this.currentCooldownTicks = 0;
+    }
+
+    public void fillCurrentCooldownTicks() {
+        this.currentCooldownTicks = maxCooldownTicks;
+    }
+
+    public void decrementCurrentCooldownTicks(int toDecrement) {
+        this.currentCooldownTicks -= toDecrement;
+    }
+
+    public boolean isInCooldown() {
+        return currentCooldownTicks > 0;
+    }
+
+    // --- Identifiers ---
 
     public ResourceLocation getActiveOrbId() {
         return activeOrbId;
@@ -43,9 +70,11 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
 
     public void clear() {
         this.orbPos = null;
-        this.maxCooldown = -1;
+        this.currentCooldownTicks = -1;
         this.activeOrbId = null;
     }
+
+    // --- Serialization ---
 
     @Override
     public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
@@ -55,7 +84,8 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
             tag.putInt("orbPosY", orbPos.getY());
             tag.putInt("orbPosZ", orbPos.getZ());
         }
-        tag.putLong("maxCooldown", maxCooldown);
+        tag.putInt("currentCooldownTicks", currentCooldownTicks);
+        tag.putInt("maxCooldownTicks", maxCooldownTicks);
 
         if (activeOrbId != null) {
             tag.putString("activeOrbId", activeOrbId.toString());
@@ -73,8 +103,12 @@ public class ActiveGlobalEffectData implements INBTSerializable<CompoundTag> {
             );
         }
 
-        if (tag.contains("maxCooldown")) {
-            maxCooldown = tag.getLong("maxCooldown");
+        if (tag.contains("currentCooldownTicks")) {
+            currentCooldownTicks = tag.getInt("currentCooldownTicks");
+        }
+
+        if (tag.contains("maxCooldownTicks")) {
+            maxCooldownTicks = tag.getInt("maxCooldownTicks");
         }
 
         if (tag.contains("activeOrbId")) {
