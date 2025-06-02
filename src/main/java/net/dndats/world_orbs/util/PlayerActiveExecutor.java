@@ -4,7 +4,6 @@ import net.dndats.world_orbs.orbs.AbstractWorldOrbBlockEntity;
 import net.dndats.world_orbs.registry.ActiveEffectRegistry;
 import net.dndats.world_orbs.registry.ModData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
@@ -21,10 +20,6 @@ public class PlayerActiveExecutor {
 
         if (ability != null) {
             var data = serverPlayer.getData(ModData.ACTIVE_GLOBAL_EFFECT.get());
-
-            serverPlayer.displayClientMessage(Component.literal(
-                    "Cooldown: " + data.getCurrentCooldownTicks() + " of max: " + data.getMaxCooldownTicks()
-            ), true);
 
             if (data.isInCooldown()) return;
 

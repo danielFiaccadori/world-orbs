@@ -16,15 +16,24 @@ public class ModEventHandler {
         if (event.getEntity() instanceof ServerPlayer player) {
             ActiveGlobalEffectData data = player.getData(ModData.ACTIVE_GLOBAL_EFFECT);
 
-            if (data.getCurrentCooldownTicks() > 0 && data.getMaxCooldownTicks() > 0) {
+            int current = data.getCurrentCooldownTicks();
+            int max = data.getMaxCooldownTicks();
+
+            if (current > 0 && max > 0) {
                 data.decrementCurrentCooldownTicks(1);
-                if (data.getCurrentCooldownTicks() >= data.getMaxCooldownTicks()) {
+
+                int newCurrent = data.getCurrentCooldownTicks();
+
+                if ((newCurrent * 10) % max == 0 || newCurrent == 0) {
+                    data.syncData(player);
+                }
+
+                if (newCurrent >= max) {
                     data.refreshCurrentCooldownTicks();
                     data.syncData(player);
                 }
             }
         }
-
     }
 
 }
